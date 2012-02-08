@@ -56,15 +56,17 @@ atts
 nums--atts
 /Users/alqadaf/Research/Data/toy/num_atts.mat
 
-QUERY FILE
-The query file should contain query terms one per line. These query terms must correspond to objects names in one of the name files in the input file.
-
-
 So this input file specifies 2 domains and a single context.
 The first domain is called 'nums' and the second is 'atts'.
 The context nums--atts consists of the domains 'nums' and 'atts' and is represented by the sparse matrix file
 'num_atts.mat'. Since 'nums' is the first domains the rows of 'num_atts.mat' correspond to the 'nums' domain
 and columns correspond to the 'atts' domain.
+
+QUERY FILE
+The query file should contain query terms one per line. These query terms must correspond to objects names in one of the name files in the input file.
+
+
+
 
 
 BEWARE OF:
@@ -77,11 +79,10 @@ BEWARE OF:
  5) The order of the domains when specifying a context matters (as described above).
 
  
- SAMPLE RUN OF NCLU:
+ SAMPLE RUN OF QBBC:
  
- To enumerate all bi-clusters in nums--atts dataset using the expected satisfaction reward function, w = 3, and tiring party goers:
  
  ./bin/qbbc -i nums.input -q 1 query_file.txt -alpha 3.0 -c 1 -o result
- assuming nums.input is the correct path this will produce files result.concepts and result.concepts.names containing the bi-clusters.
+ assuming nums.input is the correct path this will produce files result.concepts and result.concepts.names containing the query-based bi-clusters.
  
 
