@@ -227,7 +227,10 @@ int main(int argc, char** argv) {
         cout<<"\nOutput edges to edge file...\n";
         //assuming bi-clusters are domains 1 and 2
         OutputEdges( la.EDGES, la.EDGES_OUT,1,2,la.NAME_MAPS);
+        ofstream matOut((la.EDGES_FILE+".matrix").c_str());
+        OutputEdgesBinaryMatrix(la.EDGES, matOut, la.NETWORK->NumObjsInDomain(1), la.NETWORK->NumObjsInDomain(2));
         la.EDGES_OUT.close();
+        matOut.close();
     }
     cout<<"\n";
     return (EXIT_SUCCESS);
