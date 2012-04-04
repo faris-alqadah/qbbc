@@ -43,6 +43,21 @@ double Std_Across(NCluster *a, RContext *k, int s, int t);
 
 double Mean_Square_Error(NCluster *a, RContext *k, int s, int t);
 
+
+
+/*!
+ *
+ * Computer the spearman rank correlation between all pairs of objects in the specified domain over specified indices. The function writes the values
+ * to the correlation context
+ * @params objs ioset containing the list of ids
+ * @param subspace ioset containing the subset of objects in other domain over which spearman should be computed
+ * @params domainId the domain id from which the objects are derived
+ * @params k the real valued context in which the objects live'
+ * @params corrContext the real valued context to which the spearman rank correlation will be written to
+ */
+void Spearman_Rank_Correlation_AllPairs(IOSet *objs, IOSet *subspace, int domainId, RContext *k,map<int,double> &corrMap);
+
+
 #endif
 
 

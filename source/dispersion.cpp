@@ -1,4 +1,7 @@
 
+#include <string>
+#include <map>
+
 #include "../headers/dispersion.h"
 
 
@@ -121,4 +124,16 @@ double Mean_Square_Error(NCluster *a, RContext *k, int s, int t){
         delete subSpace;
     }
     return mse/allCnt;
+}
+
+void Spearman_Rank_Correlation_AllPairs(IOSet *objs, IOSet *subspace, int domainId, RContext *k, map<int,double> &corrMap){
+    for(int i=0; i < objs->Size(); i++){
+          RSet *curr = k->GetSet(domainId,objs->At(i));
+        for(int j=i+1; j < objs->Size(); j++){
+            double src = Spearman_Rank_Correlation(k->GetSet(domainId,objs->At(i)),k->GetSet(domainId,objs->At(j)),subspace);
+            int cantorId = CantorPairing(objs->At(i), objs->At(j));
+            corrMap.insert(pair<int,double>(cantorId,src));
+            cout<<"\n"<<objs->At(i)<<"\t"<<objs->At(j)<<"\t"<<src;
+        }
+    }
 }

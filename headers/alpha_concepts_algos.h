@@ -26,6 +26,8 @@ public:
 AlphaConceptsAlgos():LatticeAlgos() {
     consistencyMode=1; //default
     dispersionMode=1; //default
+    trackClusterMembership=false;
+    computeJards=false;
 };
 
 //! Paramater vector for top K cluster enumeration
@@ -58,6 +60,13 @@ map<int,double> alpha;
  double(*consistencyFunction)(RSet*,vector<double>&);
 
 
+/////////////////////////////////Additional options to track while cluster enumeration//////////////////////////////
+ //! set to true to track cluster membership
+ bool trackClusterMembership;
+//! set to true to compute Jards, in this case must keep track of 1 level of clusters and correlation
+ bool computeJards;
+
+
  /////////////////////////////////Data structures for easy reference///////////////////////////////
  //! The real valued context for which the algorithm is being applied
  RContext *K;
@@ -67,6 +76,33 @@ map<int,double> alpha;
  int s;
  //!Id of the target or non-query domain
  int t;
+ ///////////////////////////////////////////Data structures for keeping track of objects in clusters////////////////////
+ //! keep track of correlations between indiviual objects
+ map< int, double> corrMap;
+ //! keep track of which clusters objects occur in
+ NCluster * clusterMembership;
+ 
+
+
+ /*!
+ * Computer Jarbs coefficients between all pairs of objects and output them
+ *
+ */
+void Make_Jarbs_Pairs();
+
 };
+
+/*!
+ * Add bi-cluster membership information when a bicluster is discovered
+ *
+ *
+ *  @param objs the obect ids of objects in a single cluster
+ *  @param clusterNum cluster id to which all the objects belong
+ *  @param membership an ncluster representing a matrix of cluster membership
+ */
+void AddClusterMembership( IOSet *objs, int clusterNum, NCluster *memberships);
+
+
 #endif	/* _ALPHA_CONCEPTS_ALGOS_H */
+
 

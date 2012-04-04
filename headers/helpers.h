@@ -55,5 +55,9 @@ void Delete_New_Tails_Star_Charm(list< list<IOSet*>* > &newTails, list< list<IOS
 
 bool Check_Size_Bounds( list< list<IOSet*>* > &supSets, vector<int> &minSupp);
 
+
+
+
+
 #endif	/* HELPERS_H */
 

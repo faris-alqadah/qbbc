@@ -139,6 +139,7 @@ void BasicPrefix::StarCharm(){
     //reset variables
      srchLvl=0;
      numConcepts=0;
+   
     //set the quality function pointer and the ovlp function pointer
      if(qualityMode == AREA){
         qualityFunction=&Area;
@@ -153,6 +154,10 @@ void BasicPrefix::StarCharm(){
     //reset variables
      srchLvl=0;
      numConcepts=0;
+     clusterMembership = new NCluster(NETWORK->NumObjsInDomain(1));
+     for(int i=0; i < NETWORK->NumObjsInDomain(1); i++)
+        clusterMembership->GetSet(i)->SetId(i);
+
      //make the initial lists to call c
      list<list<IOSet*> *> tails;
      list<list<IOSet*> *> tailSupSet;
@@ -781,22 +786,28 @@ void BasicPrefix::Enumerate_Star_Charm(list< list<IOSet*>* > &tails, list< list<
                      supIt++;
                      idd++;
                  }
+                 numConcepts++;
                  if( enumerationMode == ENUM_MEM){
                         StoreCluster(CONCEPTS,ncluster);
-                        numConcepts=CONCEPTS.size();
+                       // numConcepts=CONCEPTS.size();
                  }
                  else if(enumerationMode == ENUM_FILE) {
                         OutputCluster(ncluster,OUT1);
                         OutputCluster(ncluster,OUT2,NAME_MAPS);
-                        numConcepts++;
                   }else if( ( enumerationMode == ENUM_TOPK_MEM) || (enumerationMode == ENUM_TOPK_FILE)){
                         SetQuality(ncluster,topKparams,qualityFunction);
                         RetainTopK_Overlap(CONCEPTS,ncluster,ovlpFunction,ovlpThresh,topKK);
-                        numConcepts=CONCEPTS.size();
+                       //numConcepts=CONCEPTS.size();
                   }
                  if(outputEdges){
                      //assumes bi-clusters domains ids are 1 and 2
                      AddBiCluster_Edges(ncluster,1, 2, EDGES);
+                 }
+                 if(trackClusterMembership){
+                     AddClusterMembership( ncluster->GetSetById(2),numConcepts, clusterMembership);
+                 }
+                 if(computeJards && srchLvl == 1){
+                     Spearman_Rank_Correlation_AllPairs(ncluster->GetSetById(2), ncluster->GetSetById(1),2, NETWORK->GetRContext(1,2), corrMap);
                  }
             }
            // cout<<"\nnew tails size before recursive: "<<newTails.size(); cout.flush();

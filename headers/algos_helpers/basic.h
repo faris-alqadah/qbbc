@@ -79,5 +79,8 @@ void OutputEdges( map<int, pair<int,int> > &theMap, ofstream &out,int id1, int i
  */
 void OutputEdgesBinaryMatrix( map<int, pair<int,int> > &theMap, ofstream &out, int sz1, int sz2);
 
+
+
+
 #endif	/* BASIC_H */
 

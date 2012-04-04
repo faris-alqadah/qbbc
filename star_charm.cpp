@@ -39,6 +39,7 @@ void DisplayUsage(){
         <<"\n-k <num>(>0) only enumerate the top k clusters (default is to use area to rank) "
         <<"\n-beta <num>(0-1) specify beta value to use beta-ranking of clusters "
         <<"\n-ovlp <num>(0-1) specify percent overlap to use when ranking top k (default is 0.25)"
+        <<"\n-jards <use this flag to compute jards scores>"
         <<"\n-prog <display progress>"
         <<"\n\n";
     exit(1);
@@ -116,6 +117,12 @@ void CheckArguments(){
         for(int i=0; i < la.PRUNE_SIZE_VECTOR.size(); i++)
             cout<<"\nDOMAIN "<<i+1<<" min: "<<la.PRUNE_SIZE_VECTOR[i];
     }
+    if(la.trackClusterMembership){
+        cout<<"\nTrack cluster membership enabled";
+    }
+    if(la.computeJards){
+        cout<<"\nCompute JARDS scores enabled";
+    }
     la.dispersionFunction=&Range;
     if(numContexts == 0){
         cout<<"\nALPHA values not defined for contexts! Please specify!\n";
@@ -179,7 +186,10 @@ void ProcessCmndLine(int argc, char ** argv){
            else if(temp == "-beta"){
                la.qualityMode= la.BETA;
                beta = atof(argv[++i]);
-
+           }
+           else if(temp == "-jards"){
+               la.computeJards=true;
+               la.trackClusterMembership=true;
            }
         }
     }
@@ -231,6 +241,9 @@ int main(int argc, char** argv) {
         OutputEdgesBinaryMatrix(la.EDGES, matOut, la.NETWORK->NumObjsInDomain(1), la.NETWORK->NumObjsInDomain(2));
         la.EDGES_OUT.close();
         matOut.close();
+    }
+    if(la.computeJards){
+        la.Make_Jarbs_Pairs();
     }
     cout<<"\n";
     return (EXIT_SUCCESS);
