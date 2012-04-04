@@ -16,9 +16,15 @@ void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
                 for(int j = i+1; j < r1->Size(); j++){
                     IOSet *clusJ = clusterMembership->GetSetById(j);
                     if(clusJ->Size() > 0){
-                        double jaccard = PercentOverlap(clusI,clusJ);
-                        double jarbs1 = corrMap[ CantorPairing(i,j)];
-                        cout<<"\n"<<nmps->at(1)->GetName(i)<<"\t"<<nmps->at(1)->GetName(j)<<"\t"<<jarbs1;
+                        IOSet *inter = Intersect(clusI,clusJ);
+                        IOSet *unin = Union(clusI,clusJ);
+                        if(inter->Size() > 0){
+                            double jarbs1 = abs(corrMap[ CantorPairing(i,j)])/(double) unin->Size();
+                            if(jarbs1 > 0)
+                                cout<<"\n"<<nmps->at(1)->GetName(i)<<"\t"<<nmps->at(1)->GetName(j)<<"\t"<<jarbs1<<"\t"<<inter->Size()<<"\t"<<unin->Size()<<"\t"<<corrMap[ CantorPairing(i,j)];
+                        }
+                        delete inter;
+                        delete unin;
                     }
                 }
              }

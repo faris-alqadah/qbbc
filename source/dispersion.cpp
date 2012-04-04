@@ -132,8 +132,11 @@ void Spearman_Rank_Correlation_AllPairs(IOSet *objs, IOSet *subspace, int domain
         for(int j=i+1; j < objs->Size(); j++){
             double src = Spearman_Rank_Correlation(k->GetSet(domainId,objs->At(i)),k->GetSet(domainId,objs->At(j)),subspace);
             int cantorId = CantorPairing(objs->At(i), objs->At(j));
-            corrMap.insert(pair<int,double>(cantorId,src));
-            cout<<"\n"<<objs->At(i)<<"\t"<<objs->At(j)<<"\t"<<src;
+            if(corrMap.find(cantorId) == corrMap.end())
+                corrMap.insert(pair<int,double>(cantorId,abs(src)));
+            else 
+                corrMap[cantorId] = corrMap[cantorId] +abs(src);
+            //cout<<"\n"<<objs->At(i)<<"\t"<<objs->At(j)<<"\t"<<src;
         }
     }
 }

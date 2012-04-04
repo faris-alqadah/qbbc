@@ -806,7 +806,9 @@ void BasicPrefix::Enumerate_Star_Charm(list< list<IOSet*>* > &tails, list< list<
                  if(trackClusterMembership){
                      AddClusterMembership( ncluster->GetSetById(2),numConcepts, clusterMembership);
                  }
-                 if(computeJards && srchLvl == 1){
+                 if(computeJards){
+                     //cout<<"\nsubspace to evaluate for spearman....\n";
+                     //NETWORK->GetRContext(1,2)->PrintSubSpace(ncluster->GetSetById(2),ncluster->GetSetById(1),2,1);
                      Spearman_Rank_Correlation_AllPairs(ncluster->GetSetById(2), ncluster->GetSetById(1),2, NETWORK->GetRContext(1,2), corrMap);
                  }
             }
