@@ -802,6 +802,7 @@ void BasicPrefix::Enumerate_Star_Charm(list< list<IOSet*>* > &tails, list< list<
                  if(outputEdges){
                      //assumes bi-clusters domains ids are 1 and 2
                      AddBiCluster_Edges(ncluster,1, 2, EDGES);
+                     AddBiCluster_Edges(ncluster,2,1,EDGES);
                  }
                  if(trackClusterMembership){
                      AddClusterMembership( ncluster->GetSetById(2),numConcepts, clusterMembership);
@@ -810,6 +811,7 @@ void BasicPrefix::Enumerate_Star_Charm(list< list<IOSet*>* > &tails, list< list<
                      //cout<<"\nsubspace to evaluate for spearman....\n";
                      //NETWORK->GetRContext(1,2)->PrintSubSpace(ncluster->GetSetById(2),ncluster->GetSetById(1),2,1);
                      Spearman_Rank_Correlation_AllPairs(ncluster->GetSetById(2), ncluster->GetSetById(1),2, NETWORK->GetRContext(1,2), corrMap);
+                     // Spearman_Rank_Correlation_AllPairs(ncluster->GetSetById(1), ncluster->GetSetById(2),1, NETWORK->GetRContext(1,2), corrMap);
                  }
             }
            // cout<<"\nnew tails size before recursive: "<<newTails.size(); cout.flush();

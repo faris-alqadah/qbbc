@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <fstream>
+#include <map>
 
 #include "./headers/basic_prefix_alpha.h"
 #include "./headers/core.h"

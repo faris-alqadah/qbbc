@@ -1,5 +1,4 @@
-#include <string>
-#include <vector>
+
 
 #include "../headers/alpha_concepts_algos.h"
 
@@ -10,6 +9,7 @@ void AddClusterMembership( IOSet *objs, int clusterNum, NCluster *memberships){
 void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
     IOSet *r1 = NETWORK->GetRContext(1)->GetLabels(2);
     vector<NameMap*> *nmps = NETWORK->GetNameMaps();
+    cout<<"\ntotal of "<<corrMap.size()<<" pairs";
     for(int i=0; i < r1->Size(); i++){
              IOSet *clusI = clusterMembership->GetSetById(i);
              if(clusI->Size() > 0){
@@ -19,9 +19,11 @@ void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
                         IOSet *inter = Intersect(clusI,clusJ);
                         IOSet *unin = Union(clusI,clusJ);
                         if(inter->Size() > 0){
-                            double jarbs1 = abs(corrMap[ CantorPairing(i,j)])/(double) unin->Size();
+                            double jarbs1 = abs((double)inter->Size()*corrMap[ CantorPairing(i,j)])/(double) unin->Size();
                             if(jarbs1 > 0)
-                                cout<<"\n"<<nmps->at(1)->GetName(i)<<"\t"<<nmps->at(1)->GetName(j)<<"\t"<<jarbs1<<"\t"<<inter->Size()<<"\t"<<unin->Size()<<"\t"<<corrMap[ CantorPairing(i,j)];
+                                 corrMap[CantorPairing(i,j)] = jarbs1;
+                            else
+                                corrMap[CantorPairing(i,j)] = 0;
                         }
                         delete inter;
                         delete unin;
@@ -29,4 +31,12 @@ void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
                 }
              }
     }
+    multimap<double,int> sortedMap = flip_map(corrMap);
+    multimap<double,int>::iterator it = sortedMap.begin();
+    while(it != sortedMap.end()){
+        pair<int,int> ids= InverseCantor( (*it).second);
+        cout<<"\n"<<nmps->at(1)->GetName(ids.second)<<"\t"<<nmps->at(1)->GetName(ids.first)<<"\t"<<(*it).first;
+        it++;
+    }
+
 }
