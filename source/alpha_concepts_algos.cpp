@@ -31,12 +31,11 @@ void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
                 }
              }
     }
-    multimap<double,int> sortedMap = flip_map(corrMap);
-    multimap<double,int>::iterator it = sortedMap.begin();
-    while(it != sortedMap.end()){
-        pair<int,int> ids= InverseCantor( (*it).second);
-        cout<<"\n"<<nmps->at(1)->GetName(ids.second)<<"\t"<<nmps->at(1)->GetName(ids.first)<<"\t"<<(*it).first;
-        it++;
+   vector< pair<int,double> > *sortedPairs =  Sort_Map_By_Value(corrMap);
+  
+    for(int i=0; i < sortedPairs->size(); i++){
+        pair<int,int> ids= InverseCantor( (*sortedPairs)[i].first);
+        cout<<"\n"<<nmps->at(1)->GetName(ids.second)<<"\t"<<nmps->at(1)->GetName(ids.first)<<"\t"<<(*sortedPairs)[i].second;
     }
 
 }
