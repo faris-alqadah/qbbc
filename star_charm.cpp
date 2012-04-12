@@ -41,6 +41,7 @@ void DisplayUsage(){
         <<"\n-beta <num>(0-1) specify beta value to use beta-ranking of clusters "
         <<"\n-ovlp <num>(0-1) specify percent overlap to use when ranking top k (default is 0.25)"
         <<"\n-jards <use this flag to compute jards scores>"
+        <<"\n-membership <use this flag to keep track of cluster membership and output the matrix as a fimi file (only on single domain)>"
         <<"\n-prog <display progress>"
         <<"\n\n";
     exit(1);
@@ -192,6 +193,9 @@ void ProcessCmndLine(int argc, char ** argv){
                la.computeJards=true;
                la.trackClusterMembership=true;
            }
+           else if(temp == "-membership"){
+               la.trackClusterMembership=true;
+           }
         }
     }
     CheckArguments();
@@ -244,7 +248,12 @@ int main(int argc, char** argv) {
         matOut.close();
     }
     if(la.computeJards){
+        cout<<"\n-----------Computing Jards----------\n";
         la.Make_Jarbs_Pairs();
+    }
+    if(la.trackClusterMembership){
+        cout<<"\n-----------Outputting cluster membership----------\n";
+        la.OutputClusterMembership();
     }
     cout<<"\n";
     return (EXIT_SUCCESS);

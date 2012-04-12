@@ -84,12 +84,19 @@ map<int,double> alpha;
  
 
 
- /*!
+ /**!
  * Computer Jarbs coefficients between all pairs of objects and output them
  *
  */
 void Make_Jarbs_Pairs();
 
+
+/**
+ *
+ * Outputs the cluster membership matrix to file cluster.membership
+ *
+ */
+void OutputClusterMembership();
 };
 
 /*!
@@ -101,6 +108,8 @@ void Make_Jarbs_Pairs();
  *  @param membership an ncluster representing a matrix of cluster membership
  */
 void AddClusterMembership( IOSet *objs, int clusterNum, NCluster *memberships);
+
+
 
 
 #endif	/* _ALPHA_CONCEPTS_ALGOS_H */

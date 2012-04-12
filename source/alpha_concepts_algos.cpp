@@ -39,3 +39,15 @@ void AlphaConceptsAlgos::Make_Jarbs_Pairs(){
     }
 
 }
+
+/**
+ *
+ * Outputs the cluster membership matrix to file cluster.membership
+ *
+ */
+void AlphaConceptsAlgos::OutputClusterMembership(){
+    string fileName = "cluster.membership";
+    ofstream out(fileName.c_str());
+    clusterMembership->Output(out);
+    out.close();
+}
